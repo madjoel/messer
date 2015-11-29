@@ -1,7 +1,7 @@
-# ----------------------------------------------------
-# Module which contains the server class and interface
+# --------------------------------------
+# Module which contains the server class
 # @author Matthieu Laqua
-# ----------------------------------------------------
+# --------------------------------------
 
 # imports
 import sys, socket, threading
@@ -82,7 +82,7 @@ class Server:
                 lprint("ID " + str(self.connections[client_id].getID()) + ": "
                         + str(self.connections[client_id].getAddr()) + " "
                         + "'" + self.users[client_id] + "'")
-                self.userLock.release()
+            self.userLock.release()
         else: lprint("No connections established.")
         self.conLock.release()
 
