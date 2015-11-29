@@ -13,7 +13,7 @@ class Screen:
     # constructor
     def __init__(self):
         self.screen = curses.initscr() # wrap the terminal screen
-        #curses.noecho() # dont echo typed keys
+        curses.noecho() # dont echo typed keys
         curses.cbreak() # react to keys instantly
         self.screen.keypad(True) # handle keys
         #self.screen.nodelay(True) # dont wait for the user to input text
@@ -22,12 +22,12 @@ class Screen:
         self.width  = curses.COLS
         self.height = curses.LINES
 
-        # destructor
-        def __del__(self):
-            # make sure that the screen gets restored properly
-            # even when just the object is destroyed
-            #self.restore() # deactivated for debugging
-            pass
+    # destructor
+    def __del__(self):
+        # make sure that the screen gets restored properly
+        # even when just the object is destroyed
+        #self.restore() # deactivated for debugging
+        pass
 
     # restore the terminal screen
     def restore(self):
@@ -42,7 +42,7 @@ class Screen:
     def get_key_pressed(self):
         return self.screen.getch()
 
-    # draws a string to the screen at the give coordinates
+    # draws a string to the screen at the given coordinates
     def drawstr(self, x, y, s):
         self.screen.addstr(y, x, s)
 
