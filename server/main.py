@@ -27,14 +27,15 @@ def main():
                     "\n -h       :show this help")
             return
 
-        socket.setdefaulttimeout(3) # set default timeout of all sockets
-        server = Server(port) # bind to port
-        server.serve() # start listening
-        while not server.stopped:
-            try: time.sleep(1)
-            except KeyboardInterrupt:
-                lprint("Received keyboard interrupt signal; use command 'stop' to quit instead.")
-            if slog.DEBUG: break
+    socket.setdefaulttimeout(3) # set default timeout of all sockets
+    server = Server(port) # bind to port
+    server.serve() # start listening
+    while not server.stopped:
+        try: time.sleep(1)
+        except KeyboardInterrupt:
+            lprint("Received keyboard interrupt signal; use command 'stop' to quit instead.")
+            break
+        if slog.DEBUG: break
 
 # defines entrypoint
 if __name__ == "__main__":
