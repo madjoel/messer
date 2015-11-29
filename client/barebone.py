@@ -16,7 +16,7 @@ def main():
             except ValueError:
                 print("Invalid port: " + arg[3:])
                 return
-    
+
     client = Client(host, port)
     client.start()
 
@@ -43,14 +43,14 @@ class Client:
             print("Server not reachable. Shutting down...")
             self.sock.close()
             sys.exit(1)
-            
+
         self.console_thread = ConsoleThread(self)
         self.listen_thread = ListenThread(self)
 
     def start(self):
         self.console_thread.start()
         self.listen_thread.start()
-    
+
     def stop(self):
         print("Shutting down client...")
         self.console_thread.end()
@@ -82,7 +82,7 @@ class ListenThread(threading.Thread):
             else:
                 print("[Incoming] " + str(data, "UTF-8"))
         print("ListenThread shut down.")
-    
+
     def end(self):
         self.shouldStop = True
 
@@ -92,7 +92,7 @@ class ConsoleThread(threading.Thread):
         self.shouldStop = False
         self.parentClient = client
         threading.Thread.__init__(self, name="ConsoleThread")
-    
+
     def run(self):
         while not self.shouldStop:
             message = sys.stdin.readline()
@@ -103,7 +103,7 @@ class ConsoleThread(threading.Thread):
             else:
                 self.parentClient.send(message)
         print("ConsoleThread shut down.")
-    
+
     def end(self):
         self.shouldStop = True
 
