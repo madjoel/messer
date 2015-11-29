@@ -52,6 +52,12 @@ class Screen:
             for x in range(self.width):
                 self.drawstr(x, y, " ")
 
+    # clears one line
+    def clearln(self, line):
+        for x in range(self.width):
+            self.drawstr(x, line, " ")
+
+
     # refreshes the screen, makes changes visible
     def refresh(self):
         self.screen.refresh()
