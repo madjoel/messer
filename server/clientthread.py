@@ -31,6 +31,7 @@ class ClientThread(CustomThread):
 
             try: data = self.sock.recv(1024)
             except socket.timeout: continue
+            #except ConnectionResetError: break # TODO
             if not data: break
             else: #lprint("[Client " + str(self.ID) + "] " + str(data, "UTF-8"))
                 message = str(data, "UTF-8").strip()
