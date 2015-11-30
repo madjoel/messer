@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="13.3">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>140</x>
+      <y>230</y>
+      <w>210</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>Client
+--
+user: String
+host: String
+port: int
+sock: socket.socket
+--
+Client(): void
+launch(): void
+stop(): void
+connect(): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>10</x>
+      <y>230</y>
+      <w>110</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>Main
+--
+main(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLInterface</id>
+    <coordinates>
+      <x>140</x>
+      <y>50</y>
+      <w>160</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>IClient
+--
+receivedMsg(): void
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>220</x>
+      <y>60</y>
+      <w>110</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;90.0;10.0;90.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>430</x>
+      <y>460</y>
+      <w>230</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>Window
+--
+--
+init(): void
+appendMsg(msg: String): void
+errorMsg(msg: String): void
+render(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>430</x>
+      <y>10</y>
+      <w>260</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>CustomThread: Thread
+--
+shouldStop: bool
+--
+CustomThread(desc: String): void
+run(): void
+end(): void
+isShuttingDown(): bool
+/shutdownAttemptAction(): void/
+/alreadyShuttingDownAction(): void/
+/shutdownAction(): void/</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>430</x>
+      <y>230</y>
+      <w>260</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>ListenThread
+--
+parentClient: Client
+--
+ListenThread(client: Client): void
+run(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>550</x>
+      <y>170</y>
+      <w>30</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>740</x>
+      <y>460</y>
+      <w>270</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>Screen
+--
+screen: curses.screen
+--
+Screen(): void
+restore(): void
+get_key_pressed(): int
+drawstr(x: int, y: int, s: String): void
+clear(): void
+clearln(line: int): void
+refresh(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>340</x>
+      <y>250</y>
+      <w>110</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+has &gt;</panel_attributes>
+    <additional_attributes>90.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>300</x>
+      <y>420</y>
+      <w>150</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+has &gt;</panel_attributes>
+    <additional_attributes>130.0;140.0;10.0;140.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>650</x>
+      <y>500</y>
+      <w>110</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+has &gt;</panel_attributes>
+    <additional_attributes>90.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>10</x>
+      <y>270</y>
+      <w>150</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=.
+calls launch() &gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0;130.0;90.0</additional_attributes>
+  </element>
+</diagram>
