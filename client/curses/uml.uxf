@@ -4,9 +4,9 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>140</x>
-      <y>230</y>
-      <w>210</w>
+      <x>10</x>
+      <y>200</y>
+      <w>180</w>
       <h>200</h>
     </coordinates>
     <panel_attributes>Client
@@ -27,8 +27,8 @@ connect(): void
     <id>UMLClass</id>
     <coordinates>
       <x>10</x>
-      <y>230</y>
-      <w>110</w>
+      <y>70</y>
+      <w>100</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>Main
@@ -39,8 +39,8 @@ main(): void</panel_attributes>
   <element>
     <id>UMLInterface</id>
     <coordinates>
-      <x>140</x>
-      <y>50</y>
+      <x>20</x>
+      <y>440</y>
       <w>160</w>
       <h>100</h>
     </coordinates>
@@ -53,24 +53,27 @@ receivedMsg(): void
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>220</x>
-      <y>60</y>
-      <w>110</w>
-      <h>190</h>
+      <x>90</x>
+      <y>390</y>
+      <w>30</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;90.0;10.0;90.0;170.0</additional_attributes>
+    <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>430</x>
-      <y>460</y>
-      <w>230</w>
-      <h>150</h>
+      <x>260</x>
+      <y>10</y>
+      <w>260</w>
+      <h>170</h>
     </coordinates>
-    <panel_attributes>Window
+    <panel_attributes>UI
 --
+wtext: curses.window
+wedit: curses.window
+wcommand: curses.window
 --
 init(): void
 appendMsg(msg: String): void
@@ -81,10 +84,10 @@ render(): void</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>430</x>
-      <y>10</y>
+      <x>570</x>
+      <y>200</y>
       <w>260</w>
-      <h>170</h>
+      <h>200</h>
     </coordinates>
     <panel_attributes>CustomThread: Thread
 --
@@ -102,14 +105,14 @@ isShuttingDown(): bool
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>430</x>
-      <y>230</y>
+      <x>260</x>
+      <y>200</y>
       <w>260</w>
       <h>90</h>
     </coordinates>
     <panel_attributes>ListenThread
 --
-parentClient: Client
+parentClient: IClient
 --
 ListenThread(client: Client): void
 run(): void</panel_attributes>
@@ -118,20 +121,20 @@ run(): void</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>550</x>
-      <y>170</y>
-      <w>30</w>
-      <h>80</h>
+      <x>510</x>
+      <y>230</y>
+      <w>80</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+    <additional_attributes>60.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>740</x>
-      <y>460</y>
-      <w>270</w>
+      <x>590</x>
+      <y>10</y>
+      <w>260</w>
       <h>170</h>
     </coordinates>
     <panel_attributes>Screen
@@ -150,55 +153,96 @@ refresh(): void</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>340</x>
-      <y>250</y>
-      <w>110</w>
+      <x>180</x>
+      <y>220</y>
+      <w>100</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
 m2=1
 has &gt;</panel_attributes>
-    <additional_attributes>90.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>80.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>300</x>
-      <y>420</y>
-      <w>150</w>
-      <h>170</h>
+      <x>170</x>
+      <y>110</y>
+      <w>110</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
 m2=1
 has &gt;</panel_attributes>
-    <additional_attributes>130.0;140.0;10.0;140.0;10.0;10.0</additional_attributes>
+    <additional_attributes>90.0;20.0;10.0;20.0;10.0;90.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>650</x>
-      <y>500</y>
-      <w>110</w>
+      <x>510</x>
+      <y>110</y>
+      <w>100</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=-
 m1=1
 m2=1
 has &gt;</panel_attributes>
-    <additional_attributes>90.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>80.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>10</x>
-      <y>270</y>
-      <w>150</w>
+      <x>30</x>
+      <y>110</y>
+      <w>140</w>
       <h>110</h>
     </coordinates>
     <panel_attributes>lt=.
-calls launch() &gt;</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;90.0;130.0;90.0</additional_attributes>
+calls launch() v</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>260</x>
+      <y>310</y>
+      <w>260</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>UIThread
+--
+parentClient: IClient
+--
+UIThread(client: Client): void
+run(): void</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>180</x>
+      <y>330</y>
+      <w>100</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+has &gt;</panel_attributes>
+    <additional_attributes>80.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>510</x>
+      <y>340</y>
+      <w>80</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>60.0;10.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>
