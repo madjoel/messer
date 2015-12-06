@@ -48,6 +48,7 @@ class Client:
         self.listen_thread = ListenThread(self)
 
     def start(self):
+        self.sock.settimeout(3)
         self.console_thread.start()
         self.listen_thread.start()
 
