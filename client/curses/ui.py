@@ -1,11 +1,11 @@
-# ------------------------
-# Rudimentary window class
+# --------------------------
+# UI class, contains windows
 # @author Matthieu Laqua
-# ------------------------
+# --------------------------
 
 from screen import Screen
 
-class Window:
+class UI:
     def __init__(self):
         self.screen = None
 

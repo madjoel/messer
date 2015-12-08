@@ -7,7 +7,7 @@
 import time, socket
 from screen import Screen
 from listenthread import ListenThread
-from window import Window
+from ui import UI
 
 class Client():
     def __init__(self, user, host, port):
@@ -16,11 +16,11 @@ class Client():
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.connect(self.addr)
         self.listen_thread = ListenThread(self)
-        self.window = Window()
+        self.ui = UI()
 
     def launch(self):
-        win = self.window
-        win.init()
+        ui = self.ui
+        ui.init()
         self.listen_thread.start()
 
     def stop(self):
@@ -38,8 +38,8 @@ class Client():
         time.sleep(1) # optional
 
     def recvMsg(self, msg):
-        self.window.appendMsg(msg)
+        self.ui.appendMsg(msg)
 
     def printErr(self, errmsg):
-        self.window.errorMsg(errmsg)
+        self.ui.errorMsg(errmsg)
 

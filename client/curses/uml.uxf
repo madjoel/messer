@@ -84,7 +84,7 @@ render(): void</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>570</x>
+      <x>590</x>
       <y>200</y>
       <w>260</w>
       <h>200</h>
@@ -123,11 +123,11 @@ run(): void</panel_attributes>
     <coordinates>
       <x>510</x>
       <y>230</y>
-      <w>80</w>
+      <w>100</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>60.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>80.0;10.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
@@ -239,10 +239,10 @@ has &gt;</panel_attributes>
     <coordinates>
       <x>510</x>
       <y>340</y>
-      <w>80</w>
+      <w>100</w>
       <h>30</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>60.0;10.0;10.0;10.0</additional_attributes>
+    <additional_attributes>80.0;10.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>
