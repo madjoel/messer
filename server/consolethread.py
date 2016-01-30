@@ -15,6 +15,7 @@ class ConsoleThread(CustomThread):
     def __init__(self, server):
         self.parentServer = server
         CustomThread.__init__(self, description="ConsoleThread")
+        self.daemon = True # stop the thread on shutdown
     
     def run(self):
         while not self.shouldStop:
