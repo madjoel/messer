@@ -5,7 +5,6 @@
 
 # imports
 import time, socket
-from screen import Screen
 from listenthread import ListenThread
 from ui import UI
 
