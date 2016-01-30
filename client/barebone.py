@@ -93,6 +93,7 @@ class ConsoleThread(threading.Thread):
         self.shouldStop = False
         self.parentClient = client
         threading.Thread.__init__(self, name="ConsoleThread")
+        self.daemon = True # stop the thread on shutdown
 
     def run(self):
         while not self.shouldStop:
