@@ -23,6 +23,7 @@ class Client():
 
     def stop(self):
         self.listen_thread.end()
+        self.ui_thread.end()
 
     def connect(self, addr):
         self.sock.settimeout(10)

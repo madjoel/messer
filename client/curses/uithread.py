@@ -14,7 +14,7 @@ class UIThread(CustomThread):
         self.screen = None
         self.msg_queue = []
         self.msg_queue_mutex = Lock()
-        self.max_viewable_msgs = 10
+        self.max_viewable_msgs = 10 # will be adjusted
         CustomThread.__init__(self, description="UIThread")
 
     def run(self):
@@ -22,8 +22,8 @@ class UIThread(CustomThread):
         self.init()
         while not self.shouldStop:
             self.render_msgs()
-            self.screen.refresh()
-            time.sleep(1)
+            self.handle_keys()
+            time.sleep(0.25)
 
     def render_msgs(self):
         scr = self.screen
@@ -35,6 +35,15 @@ class UIThread(CustomThread):
             scr.clearln(i)
         for i in range(len(msgs)):
             scr.drawstr(0, i, msgs[i])
+        scr.refresh()
+
+    def handle_keys(self):
+        scr = self.screen
+        cmd_line_nr = 13
+        key = scr.get_key_pressed()
+        scr.clearln(cmd_line_nr)
+        scr.drawstr(0, cmd_line_nr, str(key))
+        scr.refresh()
 
     def init(self):
         self.screen = Screen()
