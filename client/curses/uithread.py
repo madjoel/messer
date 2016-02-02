@@ -46,7 +46,7 @@ class UIThread(CustomThread):
 
 
     def print_err(self, errmsg):
-        self.screen.clearln(10)
-        self.screen.drawstr(0, 10, errmsg)
+        self.screen.clearln(self.max_viewable_msgs)
+        self.screen.drawstr(0, self.max_viewable_msgs, "*** " + errmsg)
         self.screen.refresh()
 
