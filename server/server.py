@@ -176,8 +176,8 @@ class Server:
 
     # routes a message to the specified clients
     def routeMessage(self, message, sender_id):
-        if message.startswith("[m]"):
-            self.msgcenter_thread.addToQueue(message[3:], sender_id)
+        if not message.startswith("["):
+            self.msgcenter_thread.addToQueue(message, sender_id)
         else:
             self.manage_thread.addToQueue(message, sender_id)
 
