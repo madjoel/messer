@@ -18,8 +18,8 @@ class ListenThread(CustomThread):
             try: data = client.sock.recv(1024)
             except socket.timeout: continue
             if not data:
-                client.printErr("Connection closed.")
+                client.print_err("Connection closed.")
                 break # stop listen thread
             else:
-                client.recvMsg("[Incoming] " + str(data, "UTF-8"))
+                client.recv_msg("[Incoming] " + str(data, "UTF-8"))
 

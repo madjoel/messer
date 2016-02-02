@@ -6,7 +6,7 @@
 # imports
 import time, socket
 from listenthread import ListenThread
-from ui import UI
+from uithread import UIThread
 
 class Client():
     def __init__(self, user, host, port):
@@ -15,18 +15,17 @@ class Client():
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.connect(self.addr)
         self.listen_thread = ListenThread(self)
-        self.ui = UI()
+        self.ui_thread = UIThread(self)
 
     def launch(self):
-        ui = self.ui
-        ui.init()
+        self.ui_thread.start()
         self.listen_thread.start()
 
     def stop(self):
         self.listen_thread.end()
 
     def connect(self, addr):
-        self.sock.settimeout(60)
+        self.sock.settimeout(10)
         try: self.sock.connect(addr)
         except socket.timeout:
             print("Connection timed out.")
@@ -36,9 +35,9 @@ class Client():
         print("Successfully connected.")
         time.sleep(1) # optional
 
-    def recvMsg(self, msg):
-        self.ui.appendMsg(msg)
+    def recv_msg(self, msg):
+        self.ui_thread.recv_msg(msg)
 
-    def printErr(self, errmsg):
-        self.ui.errorMsg(errmsg)
+    def print_err(self, errmsg):
+        self.ui_thread.print_err(errmsg)
 
