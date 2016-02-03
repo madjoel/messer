@@ -13,7 +13,9 @@ class Client():
         self.user = user
         self.addr = (host, port)
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock.settimeout(10) # set to 10 to wait 10 secs for connection
         self.connect(self.addr)
+        self.sock.settimeout(3)
         self.listen_thread = ListenThread(self)
         self.ui_thread = UIThread(self)
 
@@ -26,14 +28,13 @@ class Client():
         self.ui_thread.end()
 
     def connect(self, addr):
-        self.sock.settimeout(10)
-        try: self.sock.connect(addr)
+        try:
+            self.sock.connect(addr)
+            print("Successfully connected.")
         except socket.timeout:
             print("Connection timed out.")
         except ConnectionRefusedError:
             print("Server not reachable.")
-        self.sock.settimeout(3)
-        print("Successfully connected.")
         time.sleep(1) # optional
 
     def recv_msg(self, msg):
