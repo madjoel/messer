@@ -7,6 +7,7 @@ import time
 from customthread import CustomThread
 from threading import Lock
 from screen import Screen
+from uiinputthread import UIInputThread
 
 class UIThread(CustomThread):
     def __init__(self, client):
@@ -15,15 +16,20 @@ class UIThread(CustomThread):
         self.msg_queue = []
         self.msg_queue_mutex = Lock()
         self.max_viewable_msgs = 10 # will be adjusted
+        self.ui_input_thread = None
         CustomThread.__init__(self, description="UIThread")
+    
+    def init(self):
+        self.screen = Screen()
+        self.ui_input_thread = UIInputThread(self, self.screen)
 
     def run(self):
         client = self.parentClient
         self.init()
+        self.ui_input_thread.start()
         while not self.shouldStop:
             self.render_msgs()
-            self.handle_keys()
-            time.sleep(0.25)
+            time.sleep(0.3)
 
     def render_msgs(self):
         scr = self.screen
@@ -37,22 +43,18 @@ class UIThread(CustomThread):
             scr.drawstr(0, i, msgs[i])
         scr.refresh()
 
-    def handle_keys(self):
+    def render_cmdline(self):
+        cmd_line_nr = 13 # for debugging
         scr = self.screen
-        cmd_line_nr = 13
-        key = scr.get_key_pressed()
+        cmdline = self.ui_input_thread.get_buffer()
         scr.clearln(cmd_line_nr)
-        scr.drawstr(0, cmd_line_nr, str(key))
+        scr.drawstr(0, cmd_line_nr, cmdline)
         scr.refresh()
-
-    def init(self):
-        self.screen = Screen()
 
     def recv_msg(self, msg):
         self.msg_queue_mutex.acquire()
         self.msg_queue.append(msg)
         self.msg_queue_mutex.release()
-
 
     def print_err(self, errmsg):
         self.screen.clearln(self.max_viewable_msgs)
