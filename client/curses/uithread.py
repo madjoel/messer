@@ -1,7 +1,7 @@
-# --------------------------
-# UI class, contains windows
+# ----------------------------------------------
+# UIThread class: renders UI an handles commands
 # @author Matthieu Laqua
-# --------------------------
+# ----------------------------------------------
 
 import time
 from customthread import CustomThread
