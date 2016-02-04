@@ -26,6 +26,9 @@ class Client():
     def stop(self):
         self.listen_thread.end()
         self.ui_thread.end()
+        self.listen_thread.join()
+        self.ui_thread.join()
+        self.sock.close()
 
     def connect(self, addr):
         try:
