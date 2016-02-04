@@ -22,14 +22,13 @@ class UIInputThread(CustomThread):
             self.parent_uithread.render_cmdline()
 
     def handle_key(self, key):
-        #visbuf = self.visible_buffer
-        #if (key == curses.KEY_BACKSPACE):
-        #    visbuf = visbuf[:-1]
-        #else:
-        #    visbuf += chr(key)
-        self.visible_buffer
         if (key == curses.KEY_BACKSPACE):
             self.visible_buffer = self.visible_buffer[:-1]
+        elif (key == ord('\t')):
+            self.visible_buffer += "    " # convert tab to 4 spaces
+        elif (key == curses.KEY_ENTER or key == 10):
+            self.parent_uithread.handle_command(self.visible_buffer)
+            self.visible_buffer = ""
         else:
             self.visible_buffer += chr(key)
 

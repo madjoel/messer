@@ -37,6 +37,9 @@ class Client():
             print("Server not reachable.")
         time.sleep(1) # optional
 
+    def send_msg(self, msg):
+        self.sock.sendall(bytes(msg, "UTF-8"))
+
     def recv_msg(self, msg):
         self.ui_thread.recv_msg(msg)
 

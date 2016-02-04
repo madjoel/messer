@@ -11,7 +11,7 @@ from uiinputthread import UIInputThread
 
 class UIThread(CustomThread):
     def __init__(self, client):
-        self.parentClient = client
+        self.parent_client = client
         self.screen = None
         self.msg_queue = []
         self.msg_queue_mutex = Lock()
@@ -24,7 +24,7 @@ class UIThread(CustomThread):
         self.ui_input_thread = UIInputThread(self, self.screen)
 
     def run(self):
-        client = self.parentClient
+        client = self.parent_client
         self.init()
         self.ui_input_thread.start()
         while not self.shouldStop:
@@ -45,11 +45,19 @@ class UIThread(CustomThread):
 
     def render_cmdline(self):
         cmd_line_nr = 13 # for debugging
+        cmd_line_len = 80
         scr = self.screen
         cmdline = self.ui_input_thread.get_buffer()
         scr.clearln(cmd_line_nr)
-        scr.drawstr(0, cmd_line_nr, cmdline)
+        scr.drawstr(0, cmd_line_nr, "> " + cmdline[-80:])
         scr.refresh()
+
+    def handle_command(self, cmd):
+        if not cmd.startswith("/"):
+            self.parent_client.send_msg(cmd)
+        else: # is a command
+            if cmd[1:].lower() == "stop":
+                self.parent_client.stop()
 
     def recv_msg(self, msg):
         self.msg_queue_mutex.acquire()
