@@ -10,12 +10,13 @@ class UIInputThread(CustomThread):
     def __init__(self, uithread, screen):
         self.parent_uithread = uithread
         self.screen = screen
-        self.visible_buffer = "<cmd line>" # for debugging
+        self.visible_buffer = ""
         CustomThread.__init__(self, description="UIInputThread")
         self.daemon = True
 
     def run(self):
         scr = self.screen
+        self.parent_uithread.render_cmdline() # render once
         while not self.shouldStop:
             key = scr.get_key_pressed()
             self.handle_key(key)

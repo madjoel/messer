@@ -57,6 +57,14 @@ class Screen:
         for x in range(self.width):
             self.drawstr(x, line, " ")
 
+    # returns the cursor pos (x, y)
+    def get_cursor_pos(self):
+        (y, x) = curses.getsyx()
+        return (x, y) # rotate the tuple to fit (x, y)
+
+    # sets the cursor pos
+    def set_cursor_pos(self, x, y):
+        curses.setsyx(y, x)
 
     # refreshes the screen, makes changes visible
     def refresh(self):

@@ -33,6 +33,7 @@ class UIThread(CustomThread):
 
     def render_msgs(self):
         scr = self.screen
+        (oldx, oldy) = scr.get_cursor_pos()
         if len(self.msg_queue) < self.max_viewable_msgs:
             msgs = self.msg_queue
         else:
@@ -41,6 +42,7 @@ class UIThread(CustomThread):
             scr.clearln(i)
         for i in range(len(msgs)):
             scr.drawstr(0, i, msgs[i])
+        scr.set_cursor_pos(oldx, oldy)
         scr.refresh()
 
     def render_cmdline(self):
