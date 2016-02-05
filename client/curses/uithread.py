@@ -33,7 +33,7 @@ class UIThread(CustomThread):
 
     def render_msgs(self):
         scr = self.screen
-        (oldx, oldy) = scr.get_cursor_pos()
+        oldx, oldy = scr.get_cursor_pos()
         if len(self.msg_queue) < self.max_viewable_msgs:
             msgs = self.msg_queue
         else:

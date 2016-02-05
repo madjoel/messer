@@ -59,7 +59,7 @@ class Screen:
 
     # returns the cursor pos (x, y)
     def get_cursor_pos(self):
-        (y, x) = curses.getsyx()
+        y, x = curses.getsyx()
         return (x, y) # rotate the tuple to fit (x, y)
 
     # sets the cursor pos
