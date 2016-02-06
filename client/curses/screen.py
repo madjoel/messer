@@ -65,6 +65,7 @@ class Screen:
     # sets the cursor pos
     def set_cursor_pos(self, x, y):
         curses.setsyx(y, x)
+        self.screen.move(y, x)
 
     # refreshes the screen, makes changes visible
     def refresh(self):
