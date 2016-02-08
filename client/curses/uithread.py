@@ -18,13 +18,12 @@ class UIThread(CustomThread):
         self.max_viewable_msgs = 10 # will be adjusted
         self.ui_input_thread = None
         CustomThread.__init__(self, description="UIThread")
-    
+
     def init(self):
         self.screen = Screen()
         self.ui_input_thread = UIInputThread(self, self.screen)
 
     def run(self):
-        client = self.parent_client
         self.init()
         self.ui_input_thread.start()
         while not self.shouldStop:
@@ -55,11 +54,12 @@ class UIThread(CustomThread):
         scr.refresh()
 
     def handle_command(self, cmd):
+        client = self.parent_client
         if not cmd.startswith("/"):
-            self.parent_client.send_msg(cmd)
+            client.send_msg(cmd)
         else: # is a command
             if cmd[1:].lower() == "stop":
-                self.parent_client.stop()
+                client.stop()
 
     def recv_msg(self, msg):
         self.msg_queue_mutex.acquire()

@@ -15,7 +15,7 @@ class Client():
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.settimeout(10) # set to 10 to wait 10 secs for connection
         self.connect(self.addr)
-        self.sock.settimeout(3)
+        self.sock.settimeout(2)
         self.listen_thread = ListenThread(self)
         self.ui_thread = UIThread(self)
 
