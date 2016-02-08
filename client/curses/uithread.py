@@ -57,14 +57,19 @@ class UIThread(CustomThread):
         client = self.parent_client
         if not cmd.startswith("/"):
             client.send_msg(cmd)
+            self.append_msg("<-- " + cmd)
         else: # is a command
             if cmd[1:].lower() == "stop":
                 client.stop()
 
-    def recv_msg(self, msg):
+    def append_msg(self, msg):
         self.msg_queue_mutex.acquire()
         self.msg_queue.append(msg)
         self.msg_queue_mutex.release()
+
+    def recv_msg(self, msg):
+        # TODO message parsing will be done here
+        self.append_msg(msg)
 
     def print_err(self, errmsg):
         self.screen.clearln(self.max_viewable_msgs)
