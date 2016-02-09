@@ -8,6 +8,7 @@ from customthread import CustomThread
 from threading import Lock
 from screen import Screen
 from uiinputthread import UIInputThread
+from message import Message
 
 class UIThread(CustomThread):
     def __init__(self, client):
@@ -68,8 +69,8 @@ class UIThread(CustomThread):
         self.msg_queue_mutex.release()
 
     def recv_msg(self, msg):
-        # TODO message parsing will be done here
-        self.append_msg(msg)
+        msg = Message.fromstring(msg, [])
+        self.append_msg("--> " + msg.sender_name + ": " + msg.text)
 
     def print_err(self, errmsg):
         self.screen.clearln(self.max_viewable_msgs)
