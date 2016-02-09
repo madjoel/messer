@@ -35,7 +35,7 @@ class UIThread(CustomThread):
         scr = self.screen
         oldx, oldy = scr.get_cursor_pos()
         if len(self.msg_queue) < self.max_viewable_msgs:
-            msgs = self.msg_queue
+            msgs = self.msg_queue[:] # slice it to make a copy
         else:
             msgs = self.msg_queue[-(self.max_viewable_msgs):]
         for i in range(self.max_viewable_msgs):
@@ -56,12 +56,21 @@ class UIThread(CustomThread):
 
     def handle_command(self, cmd):
         client = self.parent_client
+        if len(cmd) == 0: # just pressed return
+            return
         if not cmd.startswith("/"):
             client.send_msg(cmd)
             self.append_msg("<-- " + cmd)
         else: # is a command
             if cmd[1:].lower() == "stop":
                 client.stop()
+            if cmd[1:].lower() == "clear":
+                self.clear_msg_queue()
+
+    def clear_msg_queue(self):
+        self.msg_queue_mutex.acquire()
+        self.msg_queue = list()
+        self.msg_queue_mutex.release()
 
     def append_msg(self, msg):
         self.msg_queue_mutex.acquire()
