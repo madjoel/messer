@@ -21,5 +21,5 @@ class ListenThread(CustomThread):
                 client.print_err("Connection closed.")
                 break # stop listen thread
             else:
-                client.recv_msg("--> " + str(data, "UTF-8"))
+                client.recv_msg(str(data, "UTF-8"))
 
