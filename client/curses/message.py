@@ -18,16 +18,32 @@ class Message:
 
     # construct from representation string
     @classmethod
-    def fromstring(cls, string, recipient_ids):
-        text = re.search("text='.*?'", string).group().replace("text='", "")
-        text = text.replace("'", "").replace(Message.QUOTE_SUB, "'")
+    def fromstring(cls, string, recipient_ids=None):
+        text_match = re.search("text='.*?'", string)
+        if text_match:
+            text = text_match.group().replace("text='", "")
+            text = text.replace("'", "").replace(Message.QUOTE_SUB, "'")
+        else:
+            text = string
+
         sender_id_match = re.search("sender_id=\d+", string)
-        if sender_id_match: sender_id = sender_id_match.group().replace("sender_id=", "")
-        else: sender_id = "-1" # if there is a corrupted sender_id
-        sender_name = re.search("sender_name='.*?'", string).group() \
-            .replace("sender_name='", "")
-        sender_name = sender_name.replace("'", "").replace(Message.QUOTE_SUB, "'")
-        recipient_ids = recipient_ids
+        if sender_id_match:
+            sender_id = sender_id_match.group().replace("sender_id=", "")
+        else:
+            sender_id = -1 # if there is a corrupted sender_id
+
+        sender_name_match = re.search("sender_name='.*?'", string)
+        if sender_name_match:
+            sender_name = sender_name_match.group().replace("sender_name='", "")
+            sender_name = sender_name.replace("'", "").replace(Message.QUOTE_SUB, "'")
+        else:
+            sender_name = "nameless"
+
+        if recipient_ids == None:
+            recipient_ids = []
+        else:
+            recipient_ids = recipient_ids
+
         return cls(text, recipient_ids, sender_id, sender_name)
 
     def hasRecipient(self):
