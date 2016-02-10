@@ -6,7 +6,7 @@
 # ---------------------------------------
 
 # imports
-import curses
+import curses, threading
 
 # class definition
 class Screen:
@@ -21,6 +21,7 @@ class Screen:
 
         self.width  = curses.COLS
         self.height = curses.LINES
+        self.lock = threading.Lock()
 
     # destructor
     def __del__(self):
@@ -40,11 +41,18 @@ class Screen:
 
     # wraps the scr.getch()
     def get_key_pressed(self):
-        return self.screen.getch()
+        char = self.screen.getch()
+        if char == curses.KEY_RESIZE:
+            curses.update_lines_cols()
+            self.width  = curses.COLS
+            self.height = curses.LINES
+        return char
 
     # draws a string to the screen at the given coordinates
     def drawstr(self, x, y, s):
-        self.screen.addstr(y, x, s)
+        self.lock.acquire()
+        self.screen.insstr(y, x, s)
+        self.lock.release()
 
     # clears the screen
     def clear(self):
@@ -54,8 +62,10 @@ class Screen:
 
     # clears one line
     def clearln(self, line):
+        self.lock.acquire()
         for x in range(self.width):
-            self.drawstr(x, line, " ")
+            self.screen.insstr(line, x, " ")
+        self.lock.release()
 
     # returns the cursor pos (x, y)
     def get_cursor_pos(self):
@@ -64,10 +74,14 @@ class Screen:
 
     # sets the cursor pos
     def set_cursor_pos(self, x, y):
+        self.lock.acquire()
         curses.setsyx(y, x)
         self.screen.move(y, x)
+        self.lock.release()
 
     # refreshes the screen, makes changes visible
     def refresh(self):
+        self.lock.acquire()
         self.screen.refresh()
+        self.lock.release()
 
