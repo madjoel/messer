@@ -27,7 +27,6 @@ class UIInputThread(CustomThread):
         uithread = self.parent_uithread
         if (key == curses.KEY_RESIZE):
             uithread.update_dimension()
-            self.screen.refresh()
         elif (key == curses.KEY_BACKSPACE):
             self.visible_buffer = self.visible_buffer[:-1]
         elif (key == ord('\t')):

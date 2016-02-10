@@ -48,6 +48,10 @@ class Screen:
             self.height = curses.LINES
         return char
 
+    # push one char so that getch() will return it
+    def push_char(self, char):
+        curses.ungetch(char)
+
     # draws a string to the screen at the given coordinates
     def drawstr(self, x, y, s):
         self.lock.acquire()
