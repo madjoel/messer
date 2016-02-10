@@ -25,7 +25,10 @@ class UIInputThread(CustomThread):
 
     def handle_key(self, key):
         uithread = self.parent_uithread
-        if (key == curses.KEY_BACKSPACE):
+        if (key == curses.KEY_RESIZE):
+            uithread.update_dimension()
+            self.screen.refresh()
+        elif (key == curses.KEY_BACKSPACE):
             self.visible_buffer = self.visible_buffer[:-1]
         elif (key == ord('\t')):
             self.visible_buffer += "    " # convert tab to 4 spaces

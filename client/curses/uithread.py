@@ -17,16 +17,27 @@ class UIThread(CustomThread):
         self.msg_queue = []
         self.msg_queue_mutex = Lock()
         self.max_viewable_msgs = 10 # will be adjusted
+        self.cmd_line_nr = 13 # "
+        self.cmd_line_len = 80 # "
+        self.cmd_cursor_pos = 0 # @ beginning of cmd line
         self.ui_input_thread = None
         CustomThread.__init__(self, description="UIThread")
 
     def init(self):
         self.screen = Screen()
+        self.update_dimension()
         self.ui_input_thread = UIInputThread(self, self.screen)
+
+    def update_dimension(self):
+        scr = self.screen
+        self.max_viewable_msgs  = scr.height - 4 # may be changed
+        self.cmd_line_nr        = scr.height - 1 # display in last line
+        self.cmd_line_len       = scr.width  - 3 # because of "> " and cursor
 
     def run(self):
         self.init()
         self.ui_input_thread.start()
+        self.render_cmdline() # render once
         while not self.shouldStop:
             self.render_msgs()
             time.sleep(0.3)
@@ -34,10 +45,12 @@ class UIThread(CustomThread):
     def render_msgs(self):
         scr = self.screen
         oldx, oldy = scr.get_cursor_pos()
-        if len(self.msg_queue) < self.max_viewable_msgs:
+        self.msg_queue_mutex.acquire()
+        if len(self.msg_queue) <= self.max_viewable_msgs:
             msgs = self.msg_queue[:] # slice it to make a copy
         else:
             msgs = self.msg_queue[-(self.max_viewable_msgs):]
+        self.msg_queue_mutex.release()
         for i in range(self.max_viewable_msgs):
             scr.clearln(i)
         for i in range(len(msgs)):
@@ -46,12 +59,11 @@ class UIThread(CustomThread):
         scr.refresh()
 
     def render_cmdline(self):
-        cmd_line_nr = 13 # for debugging
-        cmd_line_len = 80
         scr = self.screen
         cmdline = self.ui_input_thread.get_buffer()
-        scr.clearln(cmd_line_nr)
-        scr.drawstr(0, cmd_line_nr, "> " + cmdline[-80:])
+        scr.clearln(self.cmd_line_nr)
+        scr.drawstr(0, self.cmd_line_nr, "> " + cmdline[-80:])
+        scr.set_cursor_pos(2 + len(cmdline[-80:]), self.cmd_line_nr)
         scr.refresh()
 
     def handle_command(self, cmd):
