@@ -30,7 +30,6 @@ class Message:
         recipient_ids = recipient_ids
         return cls(text, recipient_ids, sender_id, sender_name)
 
-
     def hasRecipient(self):
         if len(self.recipient_ids) > 0:
             return True
